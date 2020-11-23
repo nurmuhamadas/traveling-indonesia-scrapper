@@ -1,13 +1,10 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
-require('dotenv').config();
-
-const listUrl = `${process.env.BASE_URL}Daftar_tempat_wisata_di_Indonesia`;
 
 class scrapperModel {
-  static async getDestinationsList () {
+  static async getDestinationsList (url) {
     let listOfDestinations = [];
-    const html = await rp(listUrl);
+    const html = await rp(url);
     const destinations = await $('.mw-parser-output ul li>a', html).toArray();
     destinations.forEach((destination, index) => {
       const { title: name, href } = destination.attribs;
