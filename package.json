@@ -1,0 +1,12 @@
+{
+  "name": "Wonderfull-Indonesia-Scrapper",
+  "version": "1.0.0",
+  "description": "Web scrapper to get data of Indonesian tourism destination",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "Nur Muhamad Ash Shidiqi",
+  "license": "ISC"
+}
