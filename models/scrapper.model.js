@@ -20,6 +20,13 @@ class scrapperModel {
     return listOfDestinations;
   }
 
+  static async getDestinationDetails (url) {
+    this._url = url;
+    const html = await rp(url);
+    const descriptions = await this._getDescriptions(html);
+    console.log(descriptions);
+  }
+
   static async _getImages (html) {
     let images = [];
     const alt = urlParser(this._url).param;
@@ -46,6 +53,23 @@ class scrapperModel {
     });
 
     return images;
+  }
+
+  static async _getDescription (html) {
+    let shortDescription;
+    const fullDescription = await $('#bodyContent .mw-parser-output p', html).text();
+    const splittedDescription = fullDescription.split('\n');
+
+    // Avoid unexpected string
+    splittedDescription.every((description) => {
+      if (description.length > 150) {
+        shortDescription = description;
+        return false;
+      }
+      return true
+    });
+        
+    return shortDescription;
   }
 }
 
