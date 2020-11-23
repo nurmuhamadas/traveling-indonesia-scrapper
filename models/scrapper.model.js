@@ -1,5 +1,6 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
+const urlParser = require('../utils/urlParser');
 
 class scrapperModel {
   static async getDestinationsList (url) {
@@ -17,6 +18,34 @@ class scrapperModel {
     });
 
     return listOfDestinations;
+  }
+
+  static async _getImages (html) {
+    let images = [];
+    const alt = urlParser(this._url).param;
+
+    await $('#bodyContent .gallery img', html).toArray().forEach((image) => {
+      images.push({
+        href: image.attribs.src,
+        text: image.attribs.alt || alt,
+      });
+    });
+
+    await $('#bodyContent .thumbimage', html).toArray().forEach((image) => {
+      images.push({
+        href: image.attribs.src,
+        text: image.attribs.alt || alt,
+      });
+    });
+
+    await $('#bodyContent .infobox img', html).toArray().forEach((image) => {
+      images.push({
+        href: image.attribs.src,
+        text: image.attribs.alt || alt,
+      });
+    });
+
+    return images;
   }
 }
 
