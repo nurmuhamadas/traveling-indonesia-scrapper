@@ -12,7 +12,7 @@ class mapboxModel {
 
     try {
       const { data } = await Axios.get(`${apiEndpoint}${name}.json?language=id&access_token=${accessToken}`);
-      return data.features[0];
+      return data.features[0] || {};
     } catch (error) {
       console.log(error);
     }
@@ -20,25 +20,32 @@ class mapboxModel {
 
   static async getDetailLocation (locationName) {
     try {
-      const {
-        id,
-        text_id,
-        place_name: full_address,
-        context: address,
-        center: coordinates
-      } = await this._getLocation(locationName);
+      const locations = await this._getLocation(locationName);
 
-      return {
-        id,
-        text_id,
-        full_address,
-        village: address[0].text,
-        distric: address[2].text,
-        city: address[3].text,
-        region: address[4].text,
-        post_code: address[1].text,
-        coordinates
+      if (await !!locations) {
+        const {
+          id,
+          text_id,
+          place_name: full_address,
+          context: address,
+          center: coordinates
+        } = locations
+
+        return {
+          id,
+          text_id,
+          full_address,
+          village: address[0].text || '',
+          distric: address[2].text || '',
+          city: address[3].text || '',
+          region: address[4].text || '',
+          post_code: address[1].text || '',
+          coordinates
+        }
       }
+
+      return {};
+
     } catch (error) {
       console.log(error);
     }
