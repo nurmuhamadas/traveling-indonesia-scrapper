@@ -21,9 +21,9 @@ class scrapperModel {
     return listOfDestinations;
   }
 
-  static async getImages (html) {
+  static async getImages (html, url) {
     let images = [];
-    const alt = urlParser(this._url).param;
+    const alt = urlParser(url).param;
 
     await $('#bodyContent .gallery img', html).toArray().forEach((image) => {
       images.push({
