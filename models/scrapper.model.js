@@ -8,10 +8,13 @@ class scrapperModel {
     let listOfDestinations = [];
     const html = await rp(url);
     const destinations = await $('.mw-parser-output ul li>a', html).toArray();
+    
     destinations.forEach((destination, index) => {
-      const { title: name, href } = destination.attribs;
+      let { title: name, href } = destination.attribs;
       if (href.includes('/wiki/')) {
+        href = urlParser(url).origin + href;
         listOfDestinations.push({
+          id: index + 1,
           name,
           href,
         });

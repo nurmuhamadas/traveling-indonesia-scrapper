@@ -1,10 +1,13 @@
 const urlParser = (url) => {
-  const splittedUrl = url.split('/');
-
+  const { pathname, origin, hostname} = new URL(url);
+  const path = pathname.split('/');
+  path.shift();
   return {
-    hostname:  splittedUrl[2],
-    param: splittedUrl[4],
+    pathname,
+    origin,
+    hostname,
+    path
   }
 }
 
-module.exports = urlParser;
+module.exports = urlParser
