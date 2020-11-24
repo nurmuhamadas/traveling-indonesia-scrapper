@@ -21,14 +21,7 @@ class scrapperModel {
     return listOfDestinations;
   }
 
-  static async getDestinationDetails (url) {
-    this._url = url;
-    const html = await rp(url);
-    const descriptions = await this._getCategory(html);
-    console.log(descriptions);
-  }
-
-  static async _getImages (html) {
+  static async getImages (html) {
     let images = [];
     const alt = urlParser(this._url).param;
 
@@ -56,7 +49,7 @@ class scrapperModel {
     return images;
   }
 
-  static async _getDescription (html) {
+  static async getDescription (html) {
     let shortDescription;
     const fullDescription = await $('#bodyContent .mw-parser-output p', html).text();
     const splittedDescription = fullDescription.split('\n');
@@ -73,7 +66,7 @@ class scrapperModel {
     return shortDescription;
   }
 
-  static async _getCategory (html) {
+  static async getCategory (html) {
     let categories = [];
     const filter = {
       alam: ['pantai', 'gunung', 'danau', 'bukit', 'terjun', 'pulau', 'gua', 'goa', 'lembah',
