@@ -1,6 +1,7 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
 const urlParser = require('../utils/urlParser');
+const contains = require('../utils/arrayChecker');
 
 class scrapperModel {
   static async getDestinationsList (url) {
@@ -23,7 +24,7 @@ class scrapperModel {
   static async getDestinationDetails (url) {
     this._url = url;
     const html = await rp(url);
-    const descriptions = await this._getDescriptions(html);
+    const descriptions = await this._getCategory(html);
     console.log(descriptions);
   }
 
@@ -70,6 +71,35 @@ class scrapperModel {
     });
         
     return shortDescription;
+  }
+
+  static async _getCategory (html) {
+    let categories = [];
+    const filter = {
+      alam: ['pantai', 'gunung', 'danau', 'bukit', 'terjun', 'pulau', 'gua', 'goa', 'lembah',
+             'cagar', 'kepulauan', 'teluk', 'sungai', 'kawah', 'keraton', 'kebun', 'laut',
+              'pegunungan'],
+      religi: ['makam', 'masjid'],
+      taman: ['taman', 'alun', 'alun-alun'],
+      sejarah: ['monumen', 'museum', 'benteng', 'rumah', 'balai', 'istana', 'kerajaan', 'tugu', 'pahlawan',
+              'candi', 'situs'],
+      budaya: ['budaya'],
+      modern: ['mall', 'town', 'city', 'plaza', 'center', 'shooping', 'renang', 'waterpark', 'waterboom', 'park']
+    };
+
+    const title = $('h1', html).text().toLowerCase();
+    const splittedTitle = title.split(' ');
+    Object.keys(filter).forEach((category) => {
+      if (contains(splittedTitle, filter[category]) && !categories.includes(category)) {
+        categories.push(category);
+      }
+    });
+
+    if (categories.length < 1) {
+      categories.push('lainnya');
+    }
+
+    return categories;
   }
 }
 
