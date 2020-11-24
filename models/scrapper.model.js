@@ -21,6 +21,11 @@ class scrapperModel {
     return listOfDestinations;
   }
 
+  static async getName (html) {
+    const name = await $('h1', html).text();
+    return name;
+  }
+
   static async getImages (html, url) {
     let images = [];
     const alt = urlParser(url).param;
