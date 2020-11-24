@@ -19,6 +19,21 @@ class scrapperController {
       images,
     }
   }
+
+  static async getAllDestinationDetail (url) {
+    let allDestinationDetail = [];
+    const listOfDestination = await scrapperModel.getDestinationsList(url);
+
+    for (let i = 0; i < listOfDestination.length; i += 1) {
+      const detail = await this.getDestinationDetail(listOfDestination[i].href);
+      await allDestinationDetail.push({
+        id: listOfDestination[i].id,
+        ...detail,
+      });
+    }
+
+    return await allDestinationDetail;
+  }
 }
 
 module.exports = scrapperController;
