@@ -14,6 +14,26 @@ class MongoModel {
       console.log(error);
     }
   }
+
+  async insertAData ({ db, collectionName, data }) {
+    try {
+      const collection = db.collection(collectionName);
+      const result = await collection.insertOne(data);
+      return result.insertedCount;
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async insertManyData ({ db, collectionName, data }) {
+    try {
+      const collection = db.collection(collectionName);
+      const result = await collection.insertMany(data, { ordered: true });
+      return result.insertedCount;
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 module.exports = MongoModel;
