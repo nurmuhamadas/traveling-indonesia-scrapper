@@ -41,6 +41,21 @@ class exportModel {
 
     return data;
   }
+
+  async readAllRows () {
+    let data = [];
+    await this._workbook.xlsx.readFile(this._path);
+    const worksheet = this._workbook.getWorksheet(this._sheetName);
+    
+    await worksheet.eachRow(async (row, rowNumber) => {
+      if (rowNumber !== 1) {
+        let rowData = await worksheet.getRow(rowNumber);
+        await data.push(excelToObject(rowData));
+      }
+    });
+
+    return data;
+  }
 }
 
 module.exports = exportModel;
