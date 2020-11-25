@@ -34,6 +34,21 @@ class MongoModel {
       console.log(error)
     }
   }
+
+  async updateData ({ db, collectionName, data }) {
+    try {
+      const collection = db.collection(collectionName);
+      const result = await collection.updateOne(
+        { name: data.name },
+        { $set: data },
+        { upsert: true }
+      );
+      
+      return { success: true };
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 module.exports = MongoModel;
