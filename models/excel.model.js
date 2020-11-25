@@ -5,16 +5,17 @@ const { columnTemplate, style } = require('../utils/excelProp');
 class exportModel {
   constructor ({ sheetName, path}) {
     this._path = path;
+    this._sheetName = sheetName;
     this._workbook = new Excel.Workbook();
-    this._worksheet = this._workbook.addWorksheet(sheetName);
   }
 
   async generateFile () {
-    this._worksheet.columns = await columnTemplate;
+    const worksheet = await this._workbook.addWorksheet(this._sheetName);
+    worksheet.columns = await columnTemplate;
 
-    this._worksheet.getRow(1).fill = style.fill;
-    this._worksheet.getRow(1).font = style.bold;
-    this._worksheet.getRow(1).alignment = style.center;
+    worksheet.getRow(1).fill = style.fill;
+    worksheet.getRow(1).font = style.bold;
+    worksheet.getRow(1).alignment = style.center;
 
     await this._workbook.xlsx.writeFile(this._path);
 
@@ -23,15 +24,19 @@ class exportModel {
 
   async insertRow (data) {
     const dataInsert = objectToExcel(data);
+    await this._workbook.xlsx.readFile(this._path);
+    const worksheet = this._workbook.getWorksheet(this._sheetName);
 
-    this._worksheet.addRow(dataInsert).commit();
+    worksheet.addRow(dataInsert).commit();
     await this._workbook.xlsx.writeFile(this._path);
 
     return "Data successfully added";
   }
 
   async readRow (rowNumber) {
-    const row =  await this._worksheet.getRow(rowNumber);
+    await this._workbook.xlsx.readFile(this._path);
+    const worksheet = this._workbook.getWorksheet(this._sheetName);
+    const row =  await worksheet.getRow(rowNumber);
     let data = excelToObject(row);
 
     return data;
