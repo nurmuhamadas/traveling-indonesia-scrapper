@@ -1,5 +1,5 @@
 const Excel = require('exceljs');
-const { objectToExcel } = require('../utils/dataConverter');
+const { objectToExcel, excelToObject } = require('../utils/dataConverter');
 const { columnTemplate, style } = require('../utils/excelProp');
 
 class exportModel {
@@ -28,6 +28,13 @@ class exportModel {
     await this._workbook.xlsx.writeFile(this._path);
 
     return "Data successfully added";
+  }
+
+  async readRow (rowNumber) {
+    const row =  await this._worksheet.getRow(rowNumber);
+    let data = excelToObject(row);
+
+    return data;
   }
 }
 
