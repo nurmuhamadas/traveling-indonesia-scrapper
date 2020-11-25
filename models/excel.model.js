@@ -1,4 +1,5 @@
 const Excel = require('exceljs');
+const { objectToExcel } = require('../utils/dataConverter');
 const { columnTemplate, style } = require('../utils/excelProp');
 
 class exportModel {
@@ -21,7 +22,9 @@ class exportModel {
   }
 
   async insertRow (data) {
-    this._worksheet.addRow(data).commit();
+    const dataInsert = objectToExcel(data);
+
+    this._worksheet.addRow(dataInsert).commit();
     await this._workbook.xlsx.writeFile(this._path);
 
     return "Data successfully added";
