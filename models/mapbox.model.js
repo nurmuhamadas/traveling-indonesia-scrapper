@@ -52,4 +52,4 @@ class MapboxModel {
   }
 }
 
-module.exports = mapboxModel;
+module.exports = MapboxModel;

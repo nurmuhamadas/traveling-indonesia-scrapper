@@ -58,4 +58,4 @@ class ExcelModel {
   }
 }
 
-module.exports = exportModel;
+module.exports = ExcelModel;

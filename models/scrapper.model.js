@@ -107,4 +107,4 @@ class ScrapperModel {
   }
 }
 
-module.exports = scrapperModel;
+module.exports = ScrapperModel;

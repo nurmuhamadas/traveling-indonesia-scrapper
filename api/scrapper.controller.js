@@ -36,4 +36,4 @@ class ScrapperController {
   }
 }
 
-module.exports = scrapperController;
+module.exports = ScrapperController;
