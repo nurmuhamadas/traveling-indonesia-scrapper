@@ -20,9 +20,9 @@ class scrapperController {
     }
   }
 
-  static async getAllDestinationDetail (url) {
+  static async getAllDestinationDetail () {
     let allDestinationDetail = [];
-    const listOfDestination = await scrapperModel.getDestinationsList(url);
+    const listOfDestination = await scrapperModel.getDestinationsList();
 
     for (let i = 0; i < listOfDestination.length; i += 1) {
       const detail = await this.getDestinationDetail(listOfDestination[i].href);

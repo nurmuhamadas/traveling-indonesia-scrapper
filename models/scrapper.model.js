@@ -2,17 +2,20 @@ const rp = require('request-promise');
 const $ = require('cheerio');
 const urlParser = require('../utils/urlParser');
 const contains = require('../utils/arrayChecker');
+require('dotenv').config();
+
+const baseUrl = process.env.BASE_URL;
 
 class scrapperModel {
-  static async getDestinationsList (url) {
+  static async getDestinationsList () {
     let listOfDestinations = [];
-    const html = await rp(url);
+    const html = await rp(baseUrl);
     const destinations = await $('.mw-parser-output ul li>a', html).toArray();
     
     destinations.forEach((destination, index) => {
       let { title: name, href } = destination.attribs;
       if (href.includes('/wiki/')) {
-        href = urlParser(url).origin + href;
+        href = urlParser(baseUrl).origin + href;
         listOfDestinations.push({
           id: index + 1,
           name,
