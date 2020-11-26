@@ -49,6 +49,10 @@ class MongoModel {
       console.log(error)
     }
   }
+
+  close () {
+    this._client.close();
+  }
 }
 
 module.exports = MongoModel;

@@ -10,6 +10,7 @@ class MongodbController {
     const result = await mongoModel.insertAData({ db, collectionName, data, });
     
     console.log(`${result} data inserted`);
+    mongoModel.close();
   }
 
   static async insertManyData (data) {
@@ -17,15 +18,20 @@ class MongodbController {
     const result = await mongoModel.insertManyData({ db, collectionName, data, });
     
     console.log(`${result} data inserted`);
+    mongoModel.close();
   }
 
   static async updateAllData (data) {
+    let count = 0;
     const db = await mongoModel.connectDB(process.env.MONGODB_DBNAME);
-    data.forEach(async (destination) => {
-      await mongoModel.updateData({db, collectionName, data: destination});
-    });
 
-    console.log('Data updated');
+    for (let i = 0; i < data.length; i += 1){
+      let result = await mongoModel.updateData({db, collectionName, data: data[i]});
+      count += result.modifiedCount;
+    };
+
+    console.log(`${count} Data updated`);
+    mongoModel.close();
   }
 }
 
