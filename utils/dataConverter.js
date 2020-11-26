@@ -8,7 +8,7 @@ const objectToExcel = ({id, name, description, categories, location, images}) =>
     location.district || '',
     location.city || '',
     location.region || '',
-    arrayToString(location.coordinate) || '',
+    arrayToString(location.coordinates) || '',
     arrayOfObjectToString(images) || '',
   ];
   
@@ -29,7 +29,7 @@ const excelToObject = (data) => {
       district: data.getCell(6).value || '',
       city: data.getCell(7).value || '',
       region: data.getCell(8).value || '',
-      coordinate: stringToArray(data.getCell(9).value) || [],
+      coordinates: stringToArray(data.getCell(9).value) || [],
     },
     images: images || [],
   };

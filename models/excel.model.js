@@ -22,12 +22,13 @@ class ExcelModel {
     console.log('File successfully generated');
   }
 
-  async insertRow (data) {
-    const dataInsert = objectToExcel(data);
+  async insertRows (data = []) {
     await this._workbook.xlsx.readFile(this._path);
     const worksheet = this._workbook.getWorksheet(this._sheetName);
 
-    worksheet.addRow(dataInsert).commit();
+    for (let i = 0; i < data.length; i += 1) {
+      await worksheet.addRow(objectToExcel(data[i])).commit();
+    }
     await this._workbook.xlsx.writeFile(this._path);
 
     console.log('Data successfully added');
