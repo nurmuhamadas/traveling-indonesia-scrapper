@@ -35,11 +35,11 @@ class MapboxModel {
           id,
           text_id,
           full_address,
-          village: address[0].text || '',
-          distric: address[2].text || '',
-          city: address[3].text || '',
-          region: address[4].text || '',
-          post_code: address[1].text || '',
+          village: !!address[0]? address[0].text : '',
+          distric: !!address[2]? address[2].text : '',
+          city: !!address[3]? address[3].text : '',
+          region: !!address[4]? address[4].text : '',
+          post_code: !!address[1]? address[1].text : '',
           coordinates
         }
       }

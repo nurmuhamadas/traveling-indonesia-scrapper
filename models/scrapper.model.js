@@ -9,20 +9,23 @@ const baseUrl = process.env.BASE_URL;
 class ScrapperModel {
   static async getDestinationsList () {
     let listOfDestinations = [];
+    let id = 0;
     const html = await rp(baseUrl);
-    const destinations = await $('.mw-parser-output ul li>a', html).toArray();
-    
+    const destinations = await $('#mw-content-text .mw-parser-output ul li>a', html).toArray();
     destinations.forEach((destination, index) => {
       let { title: name, href } = destination.attribs;
       if (href.includes('/wiki/')) {
+        id += 1;
         href = urlParser(baseUrl).origin + href;
         listOfDestinations.push({
-          id: index + 1,
+          id,
           name,
           href,
         });
       }
     });
+
+    console.log(listOfDestinations[listOfDestinations.length - 1]);
 
     return listOfDestinations;
   }

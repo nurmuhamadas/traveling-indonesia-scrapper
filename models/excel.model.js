@@ -19,7 +19,7 @@ class ExcelModel {
 
     await this._workbook.xlsx.writeFile(this._path);
 
-    return "File successfully generated";
+    console.log('File successfully generated');
   }
 
   async insertRow (data) {
@@ -30,7 +30,7 @@ class ExcelModel {
     worksheet.addRow(dataInsert).commit();
     await this._workbook.xlsx.writeFile(this._path);
 
-    return "Data successfully added";
+    console.log('Data successfully added');
   }
 
   async readRow (rowNumber) {
