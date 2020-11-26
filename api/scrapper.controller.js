@@ -30,6 +30,7 @@ class ScrapperController {
         id: listOfDestination[i].id,
         ...detail,
       });
+      console.log({ id: listOfDestination[i].id, name: detail.name });
     }
 
     return await allDestinationDetail;
