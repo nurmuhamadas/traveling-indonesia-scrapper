@@ -44,7 +44,17 @@ class MapboxModel {
         }
       }
 
-      return {};
+      return {
+        id: '',
+        text_id: '',
+        full_address: '',
+        village: '',
+        distric: '',
+        city: '',
+        region: '',
+        post_code: '',
+        coordinates: [],
+      };
 
     } catch (error) {
       console.log(error);

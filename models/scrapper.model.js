@@ -12,7 +12,7 @@ class ScrapperModel {
     let id = 0;
     const html = await rp(baseUrl);
     const destinations = await $('#mw-content-text .mw-parser-output ul li>a', html).toArray();
-    destinations.forEach((destination, index) => {
+    destinations.forEach((destination) => {
       let { title: name, href } = destination.attribs;
       if (href.includes('/wiki/')) {
         id += 1;
@@ -24,8 +24,6 @@ class ScrapperModel {
         });
       }
     });
-
-    console.log(listOfDestinations[listOfDestinations.length - 1]);
 
     return listOfDestinations;
   }

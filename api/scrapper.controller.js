@@ -24,7 +24,7 @@ class ScrapperController {
     let allDestinationDetail = [];
     const listOfDestination = await scrapperModel.getDestinationsList();
 
-    for (let i = 0; i < listOfDestination.length; i += 1) {
+    for (let i = 0; i < 830 /* data total */; i += 1) {
       const detail = await this.getDestinationDetail(listOfDestination[i].href);
       await allDestinationDetail.push({
         id: listOfDestination[i].id,
