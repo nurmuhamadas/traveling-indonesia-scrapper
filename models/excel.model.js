@@ -2,7 +2,7 @@ const Excel = require('exceljs');
 const { objectToExcel, excelToObject } = require('../utils/dataConverter');
 const { columnTemplate, style } = require('../utils/excelProp');
 
-class exportModel {
+class ExcelModel {
   constructor ({ sheetName, path}) {
     this._path = path;
     this._sheetName = sheetName;

@@ -6,7 +6,7 @@ require('dotenv').config();
 const apiEndpoint = process.env.MAPBOX_GEOCODE_ENDPOINT;
 const accessToken = process.env.MAPBOX_API_KEY;
 
-class mapboxModel {
+class MapboxModel {
   static async _getLocation(locationName) {
     const name = removeSpacing(locationName);
 

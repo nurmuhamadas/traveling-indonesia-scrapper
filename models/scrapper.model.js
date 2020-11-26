@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const baseUrl = process.env.BASE_URL;
 
-class scrapperModel {
+class ScrapperModel {
   static async getDestinationsList () {
     let listOfDestinations = [];
     const html = await rp(baseUrl);
