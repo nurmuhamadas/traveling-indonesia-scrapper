@@ -44,7 +44,7 @@ class MongoModel {
         { upsert: true }
       );
       
-      return { success: true };
+      return result;
     } catch (error) {
       console.log(error)
     }
