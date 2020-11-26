@@ -4,11 +4,11 @@ const objectToExcel = ({id, name, description, categories, location, images}) =>
     name || '',
     description || '',
     arrayToString(categories) || '',
-    location.village || '',
-    location.district || '',
-    location.city || '',
-    location.region || '',
-    arrayToString(location.coordinates) || '',
+    location? location.village : '',
+    location? location.district : '',
+    location? location.city : '',
+    location? location.region : '',
+    location? arrayToString(location.coordinates) : '',
     arrayOfObjectToString(images) || '',
   ];
   

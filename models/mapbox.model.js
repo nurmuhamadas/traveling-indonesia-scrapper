@@ -12,7 +12,10 @@ class MapboxModel {
 
     try {
       const { data } = await Axios.get(`${apiEndpoint}${name}.json?language=id&access_token=${accessToken}`);
-      return data.features[0] || {};
+      if (!!data.features) {
+        return data.features[0];
+      }
+      return null;
     } catch (error) {
       console.log(error);
     }
