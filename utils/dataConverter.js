@@ -10,6 +10,7 @@ const objectToExcel = ({id, name, description, categories, location, images}) =>
     location? location.district : '',
     location? location.city : '',
     location? location.region : '',
+    location? location.post_code : '',
     location? arrayToString(location.coordinates) : '',
     arrayOfObjectToString(images) || '',
   ];
@@ -18,7 +19,7 @@ const objectToExcel = ({id, name, description, categories, location, images}) =>
 }
 
 const excelToObject = (data) => {
-  let images = stringToArray(data.getCell(12).value);
+  let images = stringToArray(data.getCell(13).value);
   images = images.map((image) => stringToObject(image));
 
   const newData = {
@@ -33,7 +34,8 @@ const excelToObject = (data) => {
       district: data.getCell(8).value || '',
       city: data.getCell(9).value || '',
       region: data.getCell(10).value || '',
-      coordinates: stringToArray(data.getCell(11).value) || [],
+      post_code: data.getCell(11).value || '',
+      coordinates: stringToArray(data.getCell(12).value) || [],
     },
     images: images || [],
   };

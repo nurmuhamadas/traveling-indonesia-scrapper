@@ -26,23 +26,28 @@ class MapboxModel {
       const locations = await this._getLocation(locationName);
 
       if (await !!locations) {
+        let address = {};
         const {
           id,
           text_id,
           place_name: full_address,
-          context: address,
+          context,
           center: coordinates
-        } = locations
+        } = locations;
+
+        context.forEach(({ id, text }) => {
+          if (id.includes('neighborhood')) address = { ...address, village: text || '', };
+          else if (id.includes('locality')) address = { ...address, district: text || '', };
+          else if (id.includes('place')) address = { ...address, city: text || '', };
+          else if (id.includes('region')) address = { ...address, region: text || '', };
+          else if (id.includes('postcode')) address = { ...address, post_code: text || '', };
+        });
 
         return {
           id,
           text_id,
           full_address,
-          village: !!address[0]? address[0].text : '',
-          district: !!address[2]? address[2].text : '',
-          city: !!address[3]? address[3].text : '',
-          region: !!address[4]? address[4].text : '',
-          post_code: !!address[1]? address[1].text : '',
+          ...address,
           coordinates
         }
       }
